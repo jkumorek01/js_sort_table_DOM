@@ -14,7 +14,26 @@ for (let i = 0; i < headers.length; i++) {
     const rows = [...tBody.children];
 
     rows.sort((a, b) => {
-      return a.children[i].textContent.localeCompare(b.children[i].textContent);
+      if (header.textContent === 'Age') {
+        return Number(a.children[i].textContent)
+          - Number(b.children[i].textContent);
+      }
+
+      if (header.textContent === 'Salary') {
+        const salaryA = Number(
+          a.children[i].textContent.replace('$', '').replace(',', '')
+        );
+
+        const salaryB = Number(
+          b.children[i].textContent.replace('$', '').replace(',', '')
+        );
+
+        return salaryA - salaryB;
+      }
+
+      return a.children[i].textContent.localeCompare(
+        b.children[i].textContent
+      );
     });
 
     tBody.append(...rows);
